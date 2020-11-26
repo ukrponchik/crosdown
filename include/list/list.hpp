@@ -24,6 +24,7 @@ public:
     return os;
   }
 
+  /// The order equal
   bool operator==(const List<T> &rht) {
     Node *current = this->head;
     Node *otherCurrent = rht.head;
@@ -35,6 +36,14 @@ public:
     }
     return true;
   }
+
+/**
+ * TODO:
+ * -[ ] isnsert
+ * -[ ] delete
+ * -[ ] pop_back, push_front
+ * -[ ] initializer CTOR
+ */
 
 private:
   class Node {
