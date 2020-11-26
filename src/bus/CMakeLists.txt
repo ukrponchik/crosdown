@@ -5,4 +5,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB SOURCES "*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include/bus)
+target_include_directories(${PROJECT_NAME}
+    PRIVATE ${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME}
+    CONFIGURATIONS Debug
+    RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin/src/
+)

@@ -121,4 +121,9 @@ public:
     if (!tmp) return set<T>{};
     return tmp;
   }
+
+  /// Повертає (A ∪ B) \ (A ∩ B)
+  set<T> operator^(const set<T> &obj) {
+    return (*this + obj) - ((*this) * obj);
+  }
 };

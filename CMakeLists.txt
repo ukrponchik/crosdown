@@ -4,4 +4,4 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/bus)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/set)
-# add_subdirectory(${CMAKE_SOURCE_DIR}/src/3)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/list)
