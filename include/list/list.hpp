@@ -11,10 +11,18 @@ public:
   /// Get the size of list
   constexpr int size() const { return Size; }
 
-  T& operator[](const int index) const;
+  /**
+   * Індексація
+   *
+   * @param index   Індекс елемента
+   * @return Елемент
+   */
+  T &operator[](const int index) const;
 
+  /// Видаляє елемент з початку
   void pop_front();
 
+  /// Очищує список
   void clear();
 
   friend std::ostream &operator<<(std::ostream &os, const List<T> &lst) {
@@ -30,26 +38,28 @@ public:
     Node *otherCurrent = rht.head;
 
     while (current->next && otherCurrent->next) {
-      if (current->data != otherCurrent->data) return false;
+      if (current->data != otherCurrent->data)
+        return false;
       otherCurrent = otherCurrent->next;
       current = current->next;
     }
     return true;
   }
 
-/**
- * TODO:
- * -[ ] isnsert
- * -[ ] delete
- * -[ ] pop_back, push_front
- * -[ ] initializer CTOR
- */
+  /**
+   * TODO:
+   * -[ ] insert
+   * -[ ] delete
+   * -[ ] pop_back, push_front
+   * -[ ] initializer CTOR
+   */
 
 private:
+  // Клас вузол
   class Node {
   public:
-    Node *next;
-    T data;
+    Node *next; // Вказівник на наступну область пам'яті
+    T data; // Данні
 
     Node(T data = T{}, Node *next = nullptr) {
       this->data = data;
@@ -57,9 +67,8 @@ private:
     }
   };
 
-  Node *head;
-  int Size;
+  Node *head; // Початок списка
+  int Size;   // Розмір списка
 };
-
 
 #include "./list.tpp"

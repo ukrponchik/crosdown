@@ -12,6 +12,11 @@ int main() {
   lst2.push_back(3);
   lst2.push_back(5);
 
+  List<int> lst3;
+  lst3.push_back(5);
+  lst3.push_back(3);
+  lst3.push_back(4);
+
   std::cout << lst1 << std::endl;
   std::cout << lst2 << std::endl;
 

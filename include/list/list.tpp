@@ -2,6 +2,7 @@ template <typename T> List<T>::List() : Size{0}, head(nullptr) {}
 
 template <typename T> List<T>::~List() {
   clear();
+  head = nullptr;
 }
 
 template <typename T> void List<T>::push_back(T data) {

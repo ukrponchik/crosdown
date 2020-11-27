@@ -18,8 +18,11 @@ Bus &Database::getBus(int numberBus)  {
 }
 
 void Database::displayAll() const {
-  for (const auto &bus : nBuses) {
-    bus.display();
+  if (nBuses.size() == 0)
+      return;
+  for (const auto &bus : nBuses)
+  {
+      bus.display();
   }
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <initializer_list>
 #include <iostream>
+#include <string>
 #include <vector>
 
 /**
@@ -34,6 +35,7 @@ public:
   }
 
   /// Добавляє елемент до множини
+  /// \param el Елемент
   void add(T el) {
     elems.push_back(el);
   }
@@ -69,14 +71,20 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const set &s) {
-    for (const auto &el : s.elems) {
-      os << el << " ";
+    if (!s) {
+      os << "\u2205";
+      return os;
     }
+    os << "{ ";
+    for (const auto &el : s.elems) {
+      os << el << ", ";
+    }
+    os << "}";
     return os;
   }
 
-  /// Return true if set is empty
-  bool operator!() {
+  /// Повертаж true, якщо множина пуста
+  bool operator!() const {
     return elems.size() == 0;
   }
 
@@ -88,8 +96,6 @@ public:
       if (obj(el)) tmp.add(el);
     }
 
-    if (!tmp)
-      return set<T>{};
     return tmp;
   }
 
@@ -122,7 +128,8 @@ public:
     return tmp;
   }
 
-  /// Повертає (A ∪ B) \ (A ∩ B)
+  /// Повертає (A ∪ B) \ (A ∩ B). @see Симетрична різниця
+  /// https://uk.wikipedia.org/wiki/%D0%A1%D0%B8%D0%BC%D0%B5%D1%82%D1%80%D0%B8%D1%87%D0%BD%D0%B0_%D1%80%D1%96%D0%B7%D0%BD%D0%B8%D1%86%D1%8F_%D0%BC%D0%BD%D0%BE%D0%B6%D0%B8%D0%BD#:~:text=%D0%A1%D0%B8%D0%BC%D0%B5%D1%82%D1%80%D0%B8%D1%87%D0%BD%D0%B0%20%D1%80%D1%96%D0%B7%D0%BD%D0%B8%D1%86%D1%8F%20%D0%B4%D0%B2%D0%BE%D1%85%20%D0%BC%D0%BD%D0%BE%D0%B6%D0%B8%D0%BD%20%E2%80%94%20%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D0%BA%D0%BE,%D0%BD%D0%B0%D0%BB%D0%B5%D0%B6%D0%B0%D1%82%D1%8C%20%D0%BE%D0%B4%D0%BD%D0%BE%D1%87%D0%B0%D1%81%D0%BD%D0%BE%20%D0%BE%D0%B1%D0%BE%D0%BC%20%D0%B2%D0%B8%D1%85%D1%96%D0%B4%D0%BD%D0%B8%D0%BC%20%D0%BC%D0%BD%D0%BE%D0%B6%D0%B8%D0%BD%D0%B0%D0%BC.&text=%D0%9D%D0%B0%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D1%96%20%D0%B4%D0%BB%D1%8F%20%D0%BF%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%BD%D1%8F%20%D1%81%D0%B8%D0%BC%D0%B5%D1%82%D1%80%D0%B8%D1%87%D0%BD%D0%BE%D1%97,%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%94%D1%82%D1%8C%D1%81%D1%8F%20%D0%BF%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%BD%D1%8F%20A%20%E2%96%B3%20B.
   set<T> operator^(const set<T> &obj) {
     return (*this + obj) - ((*this) * obj);
   }

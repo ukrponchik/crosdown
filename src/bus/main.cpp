@@ -15,50 +15,51 @@ int main() {
   while (!done) {
     int selection = displayMenu();
     switch (selection) {
-      case 0:
-        done = true;
-        break;
-      case 1:
-        addBus(buses);
-        break;
-      case 2:
-        buses.displayAll();
-        break;
-      case 3:
-        displayFromYear(buses);
-        break;
-      case 4:
-        displayRoute(buses);
-        break;
-      case 5:
-        displayMileage(buses);
-        break;
-      default:
-        std::cerr << "Unknown command." << std::endl;
-        break;
+    case 0:
+      done = true;
+      break;
+    case 1:
+      addBus(buses);
+      break;
+    case 2:
+      buses.displayAll();
+      break;
+    case 3:
+      displayFromYear(buses);
+      break;
+    case 4:
+      displayRoute(buses);
+      break;
+    case 5:
+      displayMileage(buses);
+      break;
+    default:
+      std::cerr << "Unknown command." << std::endl;
+      break;
     }
-    pause();
+    if (!done)
+      pause();
   }
 
   return 0;
 }
 
 void clearDisplay() {
-  #ifndef __linux__
-    system("cls");
-  #else
-    system("clear");
-  #endif
+#ifndef __linux__
+  system("cls");
+#else
+  system("clear");
+#endif
 }
 
 void pause() {
-  #ifndef __linux__
-    system("pause");
-  #else
-    std::cout << "Press to continue..." << std::endl;
-    char c;
-    std::cin >> c;
-  #endif
+#ifndef __linux__
+  system("pause");
+#else
+  std::cout << "Press to continue..." << std::endl;
+  char c;
+  std::cin >> c;
+#endif
 }
 
 int displayMenu() {
@@ -114,9 +115,7 @@ void displayRoute(Database &db) {
   std::cout << "Number route: ";
   std::cin >> route;
 
-  db.display([&route](const Bus &b){
-    return b.getRoute() == route;
-  });
+  db.display([&route](const Bus &b) { return b.getRoute() == route; });
 }
 
 void displayFromYear(Database &db) {
@@ -125,9 +124,7 @@ void displayFromYear(Database &db) {
   std::cout << "Year: ";
   std::cin >> year;
 
-  db.display([&year](const Bus &b){
-    return 2020 - b.getYear() > year;
-  });
+  db.display([&year](const Bus &b) { return 2020 - b.getYear() > year; });
 }
 
 void displayMileage(Database &db) {
@@ -136,7 +133,5 @@ void displayMileage(Database &db) {
   std::cout << "Mileage: ";
   std::cin >> mileage;
 
-  db.display([&mileage](const Bus &b){
-    return b.getMileage() > mileage;
-  });
+  db.display([&mileage](const Bus &b) { return b.getMileage() > mileage; });
 }
