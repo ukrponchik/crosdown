@@ -41,3 +41,27 @@ int Bus::getRoute() const { return nRoute; }
 int Bus::getYear() const { return own.year; }
 
 int Bus::getMileage() const { return own.mileage; }
+
+std::istream &operator>>(std::istream &is, person &p) {
+  is >> p.surname >> p.initials;
+  return is;
+}
+
+std::istream &operator>>(std::istream &is, transport &t) {
+  is >> t.brand >> t.mileage >> t.year;
+  return is;
+}
+
+std::istream &operator>>(std::istream &is, Bus &b) {
+  is >> b.own >> b.driver >> b.number >> b.nRoute;
+  return is;
+}
+
+std::ostream &operator<<(std::ostream &os, const Bus &b) {
+  os << "Bus: " << b.getNumber() << ", " << b.getRoute() << std::endl;
+  os << "-------------------------------------------" << std::endl;
+  os << "Driver: " << b.getDriver() << std::endl;
+  os << "Characters: " << b.own.brand << ", year: " << b.own.year << ", "
+     << b.own.mileage << " km/h" << std::endl;
+  os << std::endl;
+}

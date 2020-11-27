@@ -17,19 +17,19 @@ Bus &Database::getBus(int numberBus)  {
   throw std::logic_error("No bus found.");
 }
 
-void Database::displayAll() const {
+void Database::displayAll(std::ostream &os) const {
   if (nBuses.size() == 0)
       return;
   for (const auto &bus : nBuses)
   {
-      bus.display();
+      os << bus;
   }
 }
 
-void Database::display(const std::function<bool(const Bus &bus)> &f) const {
+void Database::display(std::ostream &os, const std::function<bool(const Bus &bus)> &f) const {
   for (const auto &bus : nBuses) {
     if (f(bus)) {
-      bus.display();
+        os << bus;
     }
   }
 }

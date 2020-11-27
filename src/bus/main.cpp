@@ -1,4 +1,8 @@
 #include "database.h"
+#include <fstream>
+
+std::ifstream in{"data.txt"};
+std::ofstream outf{"out.txt", std::ios::out | std::ios::trunc};
 
 void clearDisplay();
 void pause();
@@ -12,6 +16,13 @@ int main() {
   Database buses;
   bool done = false;
 
+  while (!in.eof()) {
+    Bus b{};
+    in >> b;
+    buses.addBus(b);
+  }
+  in.close();
+
   while (!done) {
     int selection = displayMenu();
     switch (selection) {
@@ -22,7 +33,9 @@ int main() {
       addBus(buses);
       break;
     case 2:
-      buses.displayAll();
+      // outf.close();
+      // outf.open("out.txt", std::ios::out | std::ios::trunc);
+      buses.displayAll(std::cout);
       break;
     case 3:
       displayFromYear(buses);
@@ -37,10 +50,13 @@ int main() {
       std::cerr << "Unknown command." << std::endl;
       break;
     }
-    if (!done)
+    if (!done) {
       pause();
+    }
   }
 
+  buses.displayAll(outf);
+  outf.close();
   return 0;
 }
 
@@ -57,8 +73,9 @@ void pause() {
   system("pause");
 #else
   std::cout << "Press to continue..." << std::endl;
-  char c;
-  std::cin >> c;
+  std::fflush(stdin);
+  std::getchar();
+  std::getchar();
 #endif
 }
 
@@ -66,6 +83,8 @@ int displayMenu() {
   using namespace std;
   int selection;
 
+  // FIXME: Після команди "clear" у дебагері, появляється помилка term not set
+  // @see .gdbinit
   clearDisplay();
   cout << endl;
   cout << "Bus Database" << endl;
@@ -111,27 +130,39 @@ void addBus(Database &db) {
 
 void displayRoute(Database &db) {
   int route;
+  std::ofstream f3{"route.txt"};
 
   std::cout << "Number route: ";
   std::cin >> route;
 
-  db.display([&route](const Bus &b) { return b.getRoute() == route; });
+  db.display(f3, [&route](const Bus &b) { return b.getRoute() == route; });
+  f3.close();
+  db.display(std::cout,
+             [&route](const Bus &b) { return b.getRoute() == route; });
 }
 
 void displayFromYear(Database &db) {
   int year;
+  std::ofstream f1{"year.txt"};
 
   std::cout << "Year: ";
   std::cin >> year;
 
-  db.display([&year](const Bus &b) { return 2020 - b.getYear() > year; });
+  db.display(f1, [&year](const Bus &b) { return 2020 - b.getYear() > year; });
+  f1.close();
+  db.display(std::cout,
+             [&year](const Bus &b) { return 2020 - b.getYear() > year; });
 }
 
 void displayMileage(Database &db) {
   int mileage;
+  std::ofstream f2{"mileage.txt"};
 
   std::cout << "Mileage: ";
   std::cin >> mileage;
 
-  db.display([&mileage](const Bus &b) { return b.getMileage() > mileage; });
+  db.display(f2, [&mileage](const Bus &b) { return b.getMileage() > mileage; });
+  f2.close();
+  db.display(std::cout,
+             [&mileage](const Bus &b) { return b.getMileage() > mileage; });
 }
