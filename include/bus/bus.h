@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <iostream>
+#include <string>
 
 // TODO: а) список автобусов для заданного номера маршрута;
 // TODO: б) список автобусов, которые эксплуатируются больше 10 лет;
@@ -16,6 +16,8 @@ struct person {
 
   person() = default;
   person(const std::string &surname, const std::string &initials);
+
+  friend std::istream &operator>>(std::istream &is, person &p);
 };
 
 // Struct for transport
@@ -24,36 +26,44 @@ struct transport {
   int year;    // Year of commencemnet of operation
   int mileage; // Mileage in km/h
 
+  transport() = default;
   transport(const std::string &brand, int year, int mileage);
+
+  friend std::istream &operator>>(std::istream &is, transport &t);
 };
 
 class Bus {
 public:
-  /**
+    Bus() = default;
+
+    /**
    * @brief Create bus
    *
    * @param brand     Bus's brand
    * @param year      Bus's year
    * @param mileage   Bus's mileage
    */
-  Bus(const std::string &brand, int year, int mileage, int route,
-      const std::string &surname, const std::string &initials);
+    Bus(const std::string &brand, int year, int mileage, int route,
+        const std::string &surname, const std::string &initials);
 
-  /// Outputs bus info to console
-  void display() const;
+    /// Outputs bus info to console
+    void display() const;
 
-  void setDriver(const std::string &surname, const std::string &initials);
-  const person &getDriver() const;
+    void setDriver(const std::string &surname, const std::string &initials);
+    const person &getDriver() const;
 
-  void setNumber(int number);
-  int getNumber() const;
+    void setNumber(int number);
+    int getNumber() const;
 
-  void setRoute(int numRoute);
-  int getRoute() const;
+    void setRoute(int numRoute);
+    int getRoute() const;
 
-  int getYear() const;
+    int getYear() const;
 
-  int getMileage() const;
+    int getMileage() const;
+
+    friend std::istream &operator>>(std::istream &is, Bus &b);
+    friend std::ostream &operator<<(std::ostream &os, const Bus &b);
 
 private:
   person driver; // Driver full name
